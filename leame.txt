@@ -1,0 +1,18 @@
+## Curso
+https://www.youtube.com/watch?v=Est_9V3-NbU
+
+npm init -y
+npm i express prisma --save-dev
+
+## Instala cli
+npx prisma
+## Inicializa prisma
+npx prisma init
+
+## Crea las tablas
+npx prisma migrate dev --name init
+
+npm install @prisma/client
+
+// Actualizar cambios
+npx prisma generate
