@@ -13,15 +13,17 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
 
+// login usuario
 app.post('/login', (req, res) => {
   const { user, password } = req.body
   const hash = bcrypt.hashSync(password, 10)
+  const valPassword = '7477'
   res.json({
     'user': user,
     'password': password,
     'encrypt': hash,
     'length': hash.length,
-    'isValid': bcrypt.compareSync(password, hash)
+    'isValid': bcrypt.compareSync(valPassword, hash)
   })
 })
 
