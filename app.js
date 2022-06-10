@@ -91,7 +91,6 @@ app.delete('/post/:id', async (req, res) => {
   }
 })
 
-
 app.listen(4000, () => {
   console.log('Servidor localhost:4000 escuchando.');
 });

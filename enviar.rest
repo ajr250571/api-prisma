@@ -1,0 +1,13 @@
+GET http://localhost:4000/posts 
+
+###
+GET http://localhost:4000/post/12 
+
+###
+POST http://localhost:4000/post
+content-type: application/json
+
+{
+  "title":"genial",
+  "content":"genial esto"
+}
