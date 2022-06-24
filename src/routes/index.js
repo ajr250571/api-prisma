@@ -1,20 +1,13 @@
-const express = require('express');
-const { PrismaClient } = require('@prisma/client');
-const cors = require('cors');
-const morgan = require('morgan');
+const { Router } = require('express');
 const bcrypt = require('bcrypt');
+const { PrismaClient, Prisma } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-const app = express();
-
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(cors());
-app.use(morgan('dev'));
+const routes = new Router();
 
 // login usuario
-app.post('/login', (req, res) => {
+routes.post('/login', (req, res) => {
   const { user, password } = req.body
   const hash = bcrypt.hashSync(password, 10)
   const valPassword = '7477'
@@ -28,7 +21,7 @@ app.post('/login', (req, res) => {
 })
 
 // Mostrar todos los registros
-app.get('/posts', async (req, res) => {
+routes.get('/posts', async (req, res) => {
   try {
     const posts = await prisma.post.findMany()
     res.json(posts)
@@ -38,7 +31,7 @@ app.get('/posts', async (req, res) => {
 })
 
 // Mostrar un registro
-app.get('/post/:id', async (req, res) => {
+routes.get('/post/:id', async (req, res) => {
   try {
     const { id } = req.params
     const post = await prisma.post.findMany({
@@ -51,20 +44,30 @@ app.get('/post/:id', async (req, res) => {
 })
 
 // Crear un registro
-app.post('/post', async (req, res) => {
+routes.post('/post', async (req, res) => {
+  const { title, content } = req.body;
   try {
-    const { title, content } = req.body
-    result = await prisma.post.create({
+    const result = await prisma.post.create({
       data: { title, content }
-    })
-    res.json(result)
-  } catch (error) {
-    console.error(error)
+    });
+    if (res.status(200)) {
+      res.json({result: true});
+    }
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      if (e.code === 'P2002') {
+        console.log('There is a unique constraint violation.')
+      }
+    }
+    res.json({result: false});
+    //throw e
   }
+
+
 })
 
 //Actualizar registro
-app.put('/post/:id', async (req, res) => {
+routes.put('/post/:id', async (req, res) => {
   try {
     const { id } = req.params
     const { title, content } = req.body
@@ -79,7 +82,7 @@ app.put('/post/:id', async (req, res) => {
 })
 
 //Elimiar registro
-app.delete('/post/:id', async (req, res) => {
+routes.delete('/post/:id', async (req, res) => {
   try {
     const { id } = req.params
     const post = await prisma.post.delete({
@@ -91,7 +94,5 @@ app.delete('/post/:id', async (req, res) => {
   }
 })
 
-app.listen(4000, () => {
-  console.log('Servidor localhost:4000 escuchando.');
-});
 
+module.exports = routes;

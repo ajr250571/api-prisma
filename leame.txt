@@ -17,6 +17,7 @@ npm install @prisma/client
 // Actualizar cambios
 npx prisma generate
 
+npx prisma studio
 
 ## Instalar PM2
 npm i pm2

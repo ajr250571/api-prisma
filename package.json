@@ -2,10 +2,10 @@
   "name": "api-prisma",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
     "dev": "nodemon main",
-    "prod": "node app.js"
+    "prod": "node src/app.js"
   },
   "keywords": [],
   "author": "",
@@ -20,5 +20,9 @@
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "morgan": "^1.10.0"
+  },
+  "prisma": {
+    "schema": "./src/prisma/schema.prisma",
+    "seed": "ts-node src/prisma/seed.ts"
   }
 }

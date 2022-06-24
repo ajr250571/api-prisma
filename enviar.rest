@@ -8,6 +8,23 @@ POST http://localhost:4000/post
 content-type: application/json
 
 {
-  "title":"genial",
-  "content":"genial esto"
+  "title":"cuarto",
+  "content":"Registro cuarto"
+}
+
+###
+PUT http://localhost:4000/post/77
+content-type: application/json
+
+{
+  "content":"Registro Segundo MODIFICADO"
+}
+
+###
+POST http://localhost:4000/login
+content-type: application/json
+
+{
+  "user":"arodriguez",
+  "password":"7477"
 }
