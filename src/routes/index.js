@@ -51,7 +51,7 @@ routes.post('/post', async (req, res) => {
       data: { title, content }
     });
     if (res.status(200)) {
-      res.json({result: true});
+      res.json({ result: true });
     }
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
@@ -59,7 +59,7 @@ routes.post('/post', async (req, res) => {
         console.log('There is a unique constraint violation.')
       }
     }
-    res.json({result: false});
+    res.json({ result: false });
     //throw e
   }
 
